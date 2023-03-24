@@ -47,8 +47,26 @@ class HH(Engine):
 
 
 class Superjob(Engine):
-    def get_request(self):
-        pass
+
+    API_KEY = os.getenv('SJ_KEY')
+    my_auth_data = {'X-Api-App-Id': API_KEY}
+
+    def __init__(self, keyword):
+        self.keyword = keyword
+
+    def get_request(self, page):
+        return requests.get('https://api.superjob.ru/2.0/vacancies/', headers=self.my_auth_data,
+                            params={'keywords': f'{self.keyword}', 'page': 0, 'per_page': 20}).json()['objects']
+
+    @property
+    def answer(self):
+        vacancy_list = []
+        for ans in range(25):
+            answer = self.get_request(ans)
+            for i in answer:
+                vacancy_list.append(i)
+        return vacancy_list
+
 
 
 class Vacancy():
@@ -65,3 +83,5 @@ class Vacancy():
     def __repr__(self):
         return f'Вакансия: {self.name}, Зарплата: {self.salary}, Описание: {self.desc}, Ссылка: {self.url}'
 
+sj = Superjob('python')
+print(sj.get_request(0)[1])
