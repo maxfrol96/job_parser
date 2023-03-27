@@ -1,3 +1,4 @@
+import json
 class Connector:
     """
     Класс коннектор к файлу, обязательно файл должен быть в json формате
@@ -10,20 +11,27 @@ class Connector:
         return self.__data_file
 
     @data_file.setter
-    def data_file(self):
-        return self.__connect()
+    def data_file(self, name):
+        file = open(f'{name}.json', 'a+')
+        file.close()
+        self.__data_file = file.name
+
 
     def __connect(self):
-        file = open('vacancy_list.json', 'w+')
-        file.write('abc')
-        file.close()
-        return file
-
-    def insert(self, data):
         """
-        Запись данных в файл с сохранением структуры и исходных данных
+        Проверка на существование файла с данными и
+        создание его при необходимости
+        Также проверить на деградацию и возбудить исключение
+        если файл потерял актуальность в структуре данных
         """
         pass
+
+    def insert(self, data):
+        with open(f'{self.data_file}', 'w+') as file:
+            json_data = json.dumps(data)
+            file.write(json_data)
+
+
 
     def select(self, query):
         """
@@ -42,3 +50,6 @@ class Connector:
         функция удаления не сработает
         """
         pass
+
+
+

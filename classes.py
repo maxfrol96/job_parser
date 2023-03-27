@@ -74,8 +74,15 @@ class Vacancy():
     def __init__(self, name, url, desc, salary):
         self.name = name
         self.url = url
-        self.salary = salary
         self.desc = desc
+        if salary == None:
+            self.salary = 0
+        elif type(salary) is dict:
+            self.salary = salary['from']
+            if self.salary == None:
+                self.salary = 0
+        else:
+            self.salary = salary
 
     def to_json(self):
         return {'name': self.name, 'salary': self.salary, 'description': self.desc, 'url': self.url}
@@ -84,4 +91,8 @@ class Vacancy():
         return f'Вакансия: {self.name}, Зарплата: {self.salary}, Описание: {self.desc}, Ссылка: {self.url}'
 
 sj = Superjob('python')
-print(sj.get_request(0)[1])
+# sja=sj.answer
+# print(sja)
+# print(len(sja))
+# sjr = sj.get_request(1)
+# print(sjr[0]['payment_to'])
