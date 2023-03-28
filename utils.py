@@ -36,8 +36,8 @@ def get_top_10(name):
 # print(vac_srez)
 # vac = sorted(vac_srez, key=lambda vacancy: vacancy['vacancy']['salary'], reverse=True)
 # print(vac)
-a=Connector()
-a.data_file = 'aaa'
+# a=Connector()
+# a.data_file = 'python'
 # a.insert(vacancy_to_json('python'))
 # with open('aaa.json', 'w+', encoding="utf-8") as file:
 #     f=json.dumps([1, 'simple', 'list'])
@@ -46,7 +46,7 @@ a.data_file = 'aaa'
 # a.data_file = 'aaa'
 # a.insert(vacancy_to_json('python'))
 # a.insert(sorting(vacancy_to_json('python')))
-print(a.select({'salary':300000}))
+# print(a.select({'salary':200000}))
 # a.delete({'salary':500000})
 # print(a.select({'salary':500000}))
 # print(get_top_10('aaa'))

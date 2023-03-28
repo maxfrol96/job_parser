@@ -23,7 +23,9 @@ while True:
         request = input('Введите запрос(dict):')
         key = request.partition(':')[0]
         value = request.partition(':')[2]
-        answer = file.select({key:value})
+        key = key[2:len(key) - 1]
+        value = value[0:len(key) - 1]
+        answer = file.select({key:int(value)})
         for item in answer:
             print(f'Вакансия: {item["vacancy"]["name"]}\n'
                   f'Зарплата: {item["vacancy"]["salary"]}\n'
@@ -31,7 +33,11 @@ while True:
                   f'Ссылка: {item["vacancy"]["url"]}\n')
     if user_input == 3:
         request = input('Введите запрос(dict):')
-        answer = file.delete()
+        key = request.partition(':')[0]
+        value = request.partition(':')[2]
+        key = key[2:len(key) - 1]
+        value = value[0:len(key) - 1]
+        answer = file.delete({key: int(value)})
     if user_input == 4:
         break
 

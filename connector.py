@@ -57,3 +57,10 @@ class Connector:
 # print(txt.partition(':'))
 # with open(f'aaa.json', 'r+', encoding='utf-8') as file:
 #     data = json.load(file)
+# request = input('Введите запрос(dict):')
+# key = request.partition(':')[0]
+# value = request.partition(':')[2]
+# key = key[2:len(key)-1]
+# value = value[0:len(key)-1]
+# print(key)
+# print(value)
