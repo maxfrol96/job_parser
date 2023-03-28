@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import requests
-import json
+import re
 import os
 from connector import Connector
 
@@ -11,11 +11,6 @@ class Engine(ABC):
     def get_request(self):
         return requests.get(url=self.API, params=self.params, headers=self.HEADERS).json()
 
-    @staticmethod
-    def get_connector(file_name: str) -> Connector:
-        connector = Connector(file_name)
-        """ Возвращает экземпляр класса Connector """
-        return connector
 
 class HH(Engine):
 
@@ -74,7 +69,12 @@ class Vacancy():
     def __init__(self, name, url, desc, salary):
         self.name = name
         self.url = url
-        self.desc = desc
+        if desc == None:
+            self.desc = desc
+        else:
+            desc = desc.partition('.')[0]
+            desc = desc.replace('\n', '')
+            self.desc = re.sub(r'\<[^>]*\>', '', desc)
         if salary == None:
             self.salary = 0
         elif type(salary) is dict:
@@ -90,7 +90,7 @@ class Vacancy():
     def __repr__(self):
         return f'Вакансия: {self.name}, Зарплата: {self.salary}, Описание: {self.desc}, Ссылка: {self.url}'
 
-sj = Superjob('python')
+# sj = Superjob('python')
 # sja=sj.answer
 # print(sja)
 # print(len(sja))

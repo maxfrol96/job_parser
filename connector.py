@@ -1,4 +1,5 @@
 import json
+
 class Connector:
     """
     Класс коннектор к файлу, обязательно файл должен быть в json формате
@@ -17,39 +18,42 @@ class Connector:
         self.__data_file = file.name
 
 
-    def __connect(self):
-        """
-        Проверка на существование файла с данными и
-        создание его при необходимости
-        Также проверить на деградацию и возбудить исключение
-        если файл потерял актуальность в структуре данных
-        """
-        pass
-
     def insert(self, data):
-        with open(f'{self.data_file}', 'w+') as file:
-            json_data = json.dumps(data)
+        with open(f'{self.data_file}', 'w+', encoding='utf-8') as file:
+            json_data = json.dumps(data, ensure_ascii=False, sort_keys=True, indent=4)
             file.write(json_data)
 
 
 
     def select(self, query):
-        """
-        Выбор данных из файла с применением фильтрации
-        query содержит словарь, в котором ключ это поле для
-        фильтрации, а значение это искомое значение, например:
-        {'price': 1000}, должно отфильтровать данные по полю price
-        и вернуть все строки, в которых цена 1000
-        """
-        pass
+        with open(f'{self.data_file}', 'r', encoding='utf-8') as file:
+            data = json.load(file)
+            query_items = list(query.items())[0]
+            query_key = query_items[0]
+            query_value = query_items[1]
+            answer = []
+            for vac in data['items']:
+                if vac['vacancy'][query_key] == query_value:
+                    answer.append(vac)
+            return answer
 
     def delete(self, query):
-        """
-        Удаление записей из файла, которые соответствуют запрос,
-        как в методе select. Если в query передан пустой словарь, то
-        функция удаления не сработает
-        """
-        pass
+        with open(f'{self.data_file}', 'r+', encoding='utf-8') as file:
+            data = json.load(file)
+            query_items = list(query.items())[0]
+            query_key = query_items[0]
+            query_value = query_items[1]
+            for vac in data['items']:
+                if vac['vacancy'][query_key] == query_value:
+                    data['items'].remove(vac)
+            json_data = json.dumps(data, ensure_ascii=False)
+        with open(f'{self.data_file}', 'w', encoding='utf-8') as file:
+            file.write(json_data)
 
-
-
+# data = '<p>Привет, <b>Мир</b></p>'
+# data_2 = re.sub(r'\<[^>]*\>', '', data)
+# print(data_2)
+# txt = "текст текст: один два три"
+# print(txt.partition(':'))
+# with open(f'aaa.json', 'r+', encoding='utf-8') as file:
+#     data = json.load(file)
