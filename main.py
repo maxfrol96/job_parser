@@ -20,12 +20,11 @@ while True:
                   f'Описание: {item["vacancy"]["description"]}\n'
                   f'Ссылка: {item["vacancy"]["url"]}\n')
     if user_input == 2:
-        request = input('Введите запрос(dict):')
-        key = request.partition(':')[0]
-        value = request.partition(':')[2]
-        key = key[2:len(key) - 1]
-        value = value[0:len(key) - 1]
-        answer = file.select({key:int(value)})
+        request_field = input('Введите поле для поиска:')
+        request_value = input('Введите информацию для поиска:')
+        if request_field == 'salary':
+            request_value = int(request_value)
+        answer = file.select({request_field:request_value})
         for item in answer:
             print(f'Вакансия: {item["vacancy"]["name"]}\n'
                   f'Зарплата: {item["vacancy"]["salary"]}\n'

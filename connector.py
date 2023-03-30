@@ -50,17 +50,3 @@ class Connector:
         with open(f'{self.data_file}', 'w', encoding='utf-8') as file:
             file.write(json_data)
 
-# data = '<p>Привет, <b>Мир</b></p>'
-# data_2 = re.sub(r'\<[^>]*\>', '', data)
-# print(data_2)
-# txt = "текст текст: один два три"
-# print(txt.partition(':'))
-# with open(f'aaa.json', 'r+', encoding='utf-8') as file:
-#     data = json.load(file)
-# request = input('Введите запрос(dict):')
-# key = request.partition(':')[0]
-# value = request.partition(':')[2]
-# key = key[2:len(key)-1]
-# value = value[0:len(key)-1]
-# print(key)
-# print(value)
