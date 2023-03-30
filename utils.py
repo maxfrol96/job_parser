@@ -5,7 +5,7 @@ import json
 def vacancy_to_json(keyword: str) -> dict:
     hh_list = HH(keyword).answer
     sj_list = Superjob(keyword).answer
-    vac_dict = {"items": []}
+    vac_dict: dict = {"items": []}
     for vac in range(500):
         vacancy_hh = Vacancy(
             hh_list[vac]["name"],

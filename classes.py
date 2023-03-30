@@ -11,10 +11,8 @@ class Engine(ABC):
     }
 
     @abstractmethod
-    def get_request(self) -> requests.get:
-        return requests.get(
-            url=self.API, params=self.params, headers=self.HEADERS
-        ).json()
+    def get_request(self) -> None:
+        pass
 
 
 class HH(Engine):
@@ -23,7 +21,7 @@ class HH(Engine):
     def __init__(self, keyword: str) -> None:
         self.keyword = keyword
 
-    def get_request(self, page: int) -> requests.get:
+    def get_request(self, page: int) -> dict:
         params = {
             "area": 113,
             "page": page,
@@ -52,7 +50,7 @@ class Superjob(Engine):
     def __init__(self, keyword: str):
         self.keyword = keyword
 
-    def get_request(self, page: int) -> requests.get:
+    def get_request(self, page: int) -> dict:
         return requests.get(
             "https://api.superjob.ru/2.0/vacancies/",
             headers=self.my_auth_data,
