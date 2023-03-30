@@ -3,7 +3,7 @@ from connector import Connector
 
 keyword = input("Введите ключевую фразу для поиска:")
 file = Connector()
-file.data_file = f"{keyword}"
+file.data_file: str = f"{keyword}"
 file.insert(utils.vacancy_to_json("python"))
 print(
     f"Загружено 1000 вакансий в файл {keyword}.json:\n"

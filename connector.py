@@ -20,12 +20,12 @@ class Connector:
         file.close()
         self.__data_file = file.name
 
-    def insert(self, data):
+    def insert(self, data: str) -> None:
         with open(f"{self.data_file}", "w+", encoding="utf-8") as file:
             json_data = json.dumps(data, ensure_ascii=False, sort_keys=True, indent=4)
             file.write(json_data)
 
-    def select(self, query):
+    def select(self, query: dict) -> list:
         with open(f"{self.data_file}", "r", encoding="utf-8") as file:
             data = json.load(file)
             query_items = list(query.items())[0]
@@ -37,7 +37,7 @@ class Connector:
                     answer.append(vac)
             return answer
 
-    def delete(self, query):
+    def delete(self, query: dict) -> None:
         with open(f"{self.data_file}", "r+", encoding="utf-8") as file:
             data = json.load(file)
             query_items = list(query.items())[0]
