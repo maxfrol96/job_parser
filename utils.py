@@ -1,8 +1,7 @@
 from classes import Vacancy, HH, Superjob
-from connector import Connector
 import json
 
-def vacancy_to_json(keyword):
+def vacancy_to_json(keyword: str) -> dict:
     hh_list = HH(keyword).answer
     sj_list =Superjob(keyword).answer
     vac_dict = {'items':[]}
@@ -19,34 +18,13 @@ def vacancy_to_json(keyword):
 
     return vac_dict
 
-def sorting(vacancy_json):
+def sorting(vacancy_json: dict) -> dict:
     vac_list = vacancy_json['items']
     vac_sorted = sorted(vac_list, key=lambda vacancy: vacancy['vacancy']['salary'], reverse=True)
     return {'items':vac_sorted}
 
-def get_top_10(name):
+def get_top_10(name: str) -> list:
     with open(f'{name}.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
         top_10 = sorting(data)['items'][0:10]
     return top_10
-
-# vac_list = vacancy_to_json('python')
-# # print(vac_list['items'][0])
-# vac_srez = vac_list['items']
-# print(vac_srez)
-# vac = sorted(vac_srez, key=lambda vacancy: vacancy['vacancy']['salary'], reverse=True)
-# print(vac)
-# a=Connector()
-# a.data_file = 'python'
-# a.insert(vacancy_to_json('python'))
-# with open('aaa.json', 'w+', encoding="utf-8") as file:
-#     f=json.dumps([1, 'simple', 'list'])
-#     file.write(f)
-# a=Connector()
-# a.data_file = 'aaa'
-# a.insert(vacancy_to_json('python'))
-# a.insert(sorting(vacancy_to_json('python')))
-# print(a.select({'salary':200000}))
-# a.delete({'salary':500000})
-# print(a.select({'salary':500000}))
-# print(get_top_10('aaa'))

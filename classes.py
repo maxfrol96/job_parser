@@ -69,30 +69,24 @@ class Vacancy():
     def __init__(self, name, url, desc, salary):
         self.name = name
         self.url = url
-        if desc == None:
-            self.desc = desc
-        else:
-            desc = desc.partition('.')[0]
-            desc = desc.replace('\n', '')
-            self.desc = re.sub(r'\<[^>]*\>', '', desc)
-        if salary == None:
+        self.desc = desc
+        self.salary = salary
+
+    def args_parsing(self):
+        if self.desc != None:
+            self.desc = self.desc.partition('.')[0]
+            self.desc = self.desc.replace('\n', '')
+            self.desc = re.sub(r'\<[^>]*\>', '', self.desc)
+        if self.salary == None:
             self.salary = 0
-        elif type(salary) is dict:
-            self.salary = salary['from']
+        if type(self.salary) is dict:
+            self.salary = self.salary['from']
             if self.salary == None:
                 self.salary = 0
-        else:
-            self.salary = salary
 
     def to_json(self):
+        self.args_parsing()
         return {'name': self.name, 'salary': self.salary, 'description': self.desc, 'url': self.url}
 
     def __repr__(self):
         return f'Вакансия: {self.name}, Зарплата: {self.salary}, Описание: {self.desc}, Ссылка: {self.url}'
-
-# sj = Superjob('python')
-# sja=sj.answer
-# print(sja)
-# print(len(sja))
-# sjr = sj.get_request(1)
-# print(sjr[0]['payment_to'])
