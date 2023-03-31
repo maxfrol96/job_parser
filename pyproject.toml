@@ -1,0 +1,38 @@
+[tool.black]
+line-length = 120
+skip-string-normalization = true
+skip-magic-trailing-coma = true
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | venv
+  | \.mypy_cache
+)/
+'''
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+use_parentheses = true
+line_length = 120
+skip_glob = [
+    '.git',
+    'venv',
+    '.mypy_cache'
+]
+combine_as_imports = true
+combine_star = true
+
+[tool.mypy]
+exclude = 'venv'
+show_error_codes = true
+ignore_missing_imports = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+warn_unused_ignores = true
+warn_no_return = false
+warn_unreachable = true
+strict_equality = true
+no_implicit_optional = true
+warn_redundant_casts = true
